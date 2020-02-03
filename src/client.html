@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>simple web common clipboard</title>
+        <meta charset='utf-8'>
+    </head>
+
+    <body style="align-items: center; display: flex;">
+        <div style="margin: auto; text-align: center;">
+            <h1>Common clipboard</h1>
+            <hr />
+
+            <div>
+                <b>Server Address:</b>
+                <input id="id_uri"/>
+                <button id="id_connect">Connect</button>
+            </div>
+
+            <div style="margin-top: 8px; margin-bottom: 8px">
+                <b>Server State:</b>
+                <i id="id_server_state">disconnected</i>
+                <button id="id_save">Save</button>
+                <button id="id_load">Load</button>
+                <br />
+            </div>
+
+            <textarea id="id_content" type="text" style="padding: 8px; width: 800px; height:350px;"></textarea>
+        </div>
+    </body>
+</html>
+
+<script>
+    // change the default uri of webpage here.
+    id_uri.value="ws://127.0.0.1:1234";
+
+    var ws = null;
+    
+    id_connect.onclick = function () {
+        ws = new WebSocket(id_uri.value);
+        ws.onopen = function(ev) {
+            console.log("[websocket connected]");
+            id_server_state.textContent = "connected";
+        };
+        ws.onclose = function(ev) {
+            console.log("[websocket disconnected]");
+            id_server_state.textContent = "disconnected";
+        };
+        ws.onmessage = function(ev) {
+            console.log("[message received]");
+            console.log(ev.data);
+            id_content.value = ev.data;
+        }
+    }
+
+    id_save.onclick = function () {
+        ws.send("SAVE");
+        ws.send(id_content.value);
+    }
+    
+    id_load.onclick = function() {
+        ws.send("LOAD");
+    }
+</script>
