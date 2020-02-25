@@ -34,35 +34,6 @@
 <script>
     // this block writen the functions
 
-
-    /*
-    var compileCookie = function(cookie_obj) {
-        let res = "";
-        for (const [key, value] of Object.entries(cookie_obj))
-            res += key + '=' + value + ';';
-        return res;
-    }
-
-    var my_cookie = {};
-    my_cookie.cookie = parseCookie(document.cookie);
-    my_cookie.save = function() {
-        console.log("log: saving cookie...");
-        document.cookie = compileCookie(this.cookie);
-        console.log("log: document.cookie=" + document.cookie);
-        console.log("log: compileCookie=" + compileCookie(this.cookie));
-    }
-    my_cookie.refresh_expires = function() {
-        this.cookie['Expires'] = new Date(Date.now() + 7 * 24 * 3600).toUTCString();
-        this.cookie['Path'] = "/";
-        this.save();
-    }
-    my_cookie.set_uri = function(uri) {
-        this.cookie['uri'] = uri;
-        this.save();
-    }
-
-    */
-
     var op_cookie = {};
     op_cookie.parseCookie = function(cookie_str) {
         let res = {};
@@ -87,7 +58,7 @@
     op_cookie.set = function(name, value, expire_seconds) {
         let expire_date;
         if (expire_seconds == undefined) {
-            expire_date = new Date(Date.now() + 7 * 24 * 3600);
+            expire_date = new Date(Date.now() + 7 * 24 * 3600 * 1000);
         } else {
             expire_date = new Date(Date.now() + expire_seconds);
         }
