@@ -1,3 +1,6 @@
+#include <string>
+
+std::string html_code = R"(
 <!DOCTYPE html>
 
 <html>
@@ -112,3 +115,13 @@
         ws.send("LOAD");
     }
 </script>
+)";
+
+std::string header_code_pre = R"(HTTP/2 200 OK
+Content-type: text/html; charset=utf-8
+Connection: close
+Server: custom)";
+
+std::string header_code = header_code_pre + "\nContent-Length: " +
+                          std::to_string(html_code.size()) + "\n\n";
+const std::string response_str = header_code + html_code;
